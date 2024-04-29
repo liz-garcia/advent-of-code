@@ -87,7 +87,7 @@ const processGameObject = (gameObject) => {
             return stringToArray(string, ",");
         });
     });
-  const subsetsObjects
+//   const subsetsObjects
   
 //   const processedSubsets = (arrays) => {
 //     return arrays.map((array) => {
