@@ -20,81 +20,81 @@ const puzzleInputArray = fs.readFileSync(puzzleInputPath, "utf-8").split("\n");
 */
 
 //const filterPossibleGames
-    // First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
+// First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
 
-
-    //Game 1: 4 green, 7 blue; 2 blue, 4 red; 5 blue, 2 green, 2 red; 1 green, 3 red, 9 blue; 3 green, 9 blue; 7 green, 2 blue, 2 red
-
+//Game 1: 4 green, 7 blue; 2 blue, 4 red; 5 blue, 2 green, 2 red; 1 green, 3 red, 9 blue; 3 green, 9 blue; 7 green, 2 blue, 2 red
 
 // To split and trim strings depending on a character represented by splitParam.
 const stringToArray = (string, splitParam) => {
-    return string.split(splitParam).map((item) => item.trim());
+  return string.split(splitParam).map((item) => item.trim());
 };
-
 
 // For arrays that already have only 2 elements/items.
 const arrayToObject = (array, keyIndex, valueIndex) => {
-    const key = array[keyIndex];
-    const value = array[valueIndex];
+  const key = array[keyIndex];
+  const value = array[valueIndex];
 
-    const object = {
-        [key] : value
-    };
+  const object = {
+    [key]: value,
+  };
 
-    return object;
-}
+  return object;
+};
 
 // Turn a String into an Array and then into an Object
 const stringToObject = (string) => {
-    const array = stringToArray(string, ":");
-    const object = arrayToObject(array, 0, 1);
-    return object;
+  const array = stringToArray(string, ":");
+  const object = arrayToObject(array, 0, 1);
+  return object;
 };
 
 const stringsToObjects = (strings) => {
-    return strings.map((string) => {
-        return stringToObject(string);
-    });
-}
+  return strings.map((string) => {
+    return stringToObject(string);
+  });
+};
 
 // Extract the name of an specific 'key' in an Object.
 // To extract values knowing only the key index use: Object.values(objectElement)[index];
 const extractKeyName = (object, index) => {
-    const keyName = Object.keys(object)[index];
-    return keyName;
+  const keyName = Object.keys(object)[index];
+  return keyName;
 };
 
 // Extract integer Number from String
 const extractNumber = (string) => {
-    const numberString = string.replace(/\D/g, '');
-    const number = parseInt(numberString);
-    return number;
-}
+  const numberString = string.replace(/\D/g, "");
+  const number = parseInt(numberString);
+  return number;
+};
 
-// Process each gameObject so that it has 5 properties: id, name, red, green, blue. --- Initial gameObject looks like this: { 'Game 1' : '4 green, 7 blue; 2 blue, 4 red; 5 blue, 2 green, 2 red; 1 green, 3 red, 9 blue; 3 green, 9 blue; 7 green, 2 blue, 2 red' }
+// Process each gameObject so that it has 6 properties: id, name, subsets, red, green, blue. --- Initial gameObject looks like this: { 'Game 1' : '4 green, 7 blue; 2 blue, 4 red; 5 blue, 2 green, 2 red; 1 green, 3 red, 9 blue; 3 green, 9 blue; 7 green, 2 blue, 2 red' }
 const processGameObject = (gameObject) => {
-    const gameName = extractKeyName(gameObject, 0);
-    const gameId = extractNumber(gameName);
-    const gameSubsets = gameObject[gameName];
-    const newObject = {
-        id: gameId,
-        name: gameName,
-        subsets: gameSubsets,
-    }
-    return newObject;
-}
+  const gameName = extractKeyName(gameObject, 0);
+  const gameId = extractNumber(gameName);
+  const gameSubsets = gameObject[gameName];
+  const gameSubsetsArray = stringToArray(gameSubsets, ";");
+
+  const newObject = {
+    id: gameId,
+    name: gameName,
+    subsets: gameSubsetsArray,
+  };
+
+  return newObject;
+};
 
 const processGameObjects = (gameObjects) => {
-    return gameObjects.map((gameObject) =>
-        processGameObject(gameObject));
-}
+  return gameObjects.map((gameObject) => processGameObject(gameObject));
+};
 
+// Process Games Array of strings
 const processGamesArray = (gamesArray) => {
-    const toObjects = stringsToObjects(gamesArray);
-    const toProcessedObjects = processGameObjects(toObjects);
+  const toObjects = stringsToObjects(gamesArray);
+  const toProcessedObjects = processGameObjects(toObjects);
 
-    return toProcessedObjects;
-}
+  return toProcessedObjects;
+};
 
 // console.log(stringsToObjects(puzzleInputArray));
 console.log(processGamesArray(puzzleInputArray));
