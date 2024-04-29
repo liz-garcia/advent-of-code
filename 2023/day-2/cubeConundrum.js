@@ -57,4 +57,44 @@ const stringsToObjects = (strings) => {
     });
 }
 
-console.log(stringsToObjects(puzzleInputArray));
+// Extract the name of an specific 'key' in an Object.
+// To extract values knowing only the key index use: Object.values(objectElement)[index];
+const extractKeyName = (object, index) => {
+    const keyName = Object.keys(object)[index];
+    return keyName;
+};
+
+// Extract integer Number from String
+const extractNumber = (string) => {
+    const numberString = string.replace(/\D/g, '');
+    const number = parseInt(numberString);
+    return number;
+}
+
+// Process each gameObject so that it has 5 properties: id, name, red, green, blue. --- Initial gameObject looks like this: { 'Game 1' : '4 green, 7 blue; 2 blue, 4 red; 5 blue, 2 green, 2 red; 1 green, 3 red, 9 blue; 3 green, 9 blue; 7 green, 2 blue, 2 red' }
+const processGameObject = (gameObject) => {
+    const gameName = extractKeyName(gameObject, 0);
+    const gameId = extractNumber(gameName);
+    const gameSubsets = gameObject[gameName];
+    const newObject = {
+        id: gameId,
+        name: gameName,
+        subsets: gameSubsets,
+    }
+    return newObject;
+}
+
+const processGameObjects = (gameObjects) => {
+    return gameObjects.map((gameObject) =>
+        processGameObject(gameObject));
+}
+
+const processGamesArray = (gamesArray) => {
+    const toObjects = stringsToObjects(gamesArray);
+    const toProcessedObjects = processGameObjects(toObjects);
+
+    return toProcessedObjects;
+}
+
+// console.log(stringsToObjects(puzzleInputArray));
+console.log(processGamesArray(puzzleInputArray));
