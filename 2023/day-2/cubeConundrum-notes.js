@@ -81,29 +81,10 @@ const processGameObject = (gameObject) => {
   const subsets = gameObject[gameName];
   const subsetsStrings = stringToArray(subsets, ";");
   const subsetsArrays = stringsToArrays(subsetsStrings, ",");
-  const processedSubsetsArrays = subsetsArrays.map((array) => 
-    {
-        return array.map((string) => {
-            return stringToArray(string, ",");
-        });
-    });
-  const subsetsObjects
   
-//   const processedSubsets = (arrays) => {
-//     return arrays.map((array) => {
-//         return stringToArray(subset, ",");
-//     });
-//   }
-
-// stringToArray.forEach((item, index, arr) => {
-//     arr[index] = item.trim();
-//   });
-
 
 //   console.log(subsetsStrings);
-//   console.log(subsetsArrays);
-// console.log(processedSubsets(subsetsArrays));
-console.log(processedSubsetsArrays);
+  console.log(subsetsArrays);
 
   // Process SUBSETS Array of Strings to Objects
 //   const processedSubsets = (subsetsStrings) => {
@@ -122,7 +103,7 @@ console.log(processedSubsetsArrays);
   const newObject = {
     id: gameId,
     name: gameName,
-    subsets: processedSubsetsArrays,
+    subsets: subsetsArrays,
   };
 
   return newObject;
