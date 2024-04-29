@@ -1,7 +1,7 @@
 import fs from "fs";
 
 const puzzleInputPath = "2023/day-2/puzzleInput.txt";
-const puzzleInput = fs.readFileSync(puzzleInputPath, "utf-8").split("\n");
+const puzzleInputArray = fs.readFileSync(puzzleInputPath, "utf-8").split("\n");
 
 /* Which games would have been possible if the bag contained (in total) only `12 red, 13 green, 14 blue`. That is:
 
@@ -9,7 +9,7 @@ const puzzleInput = fs.readFileSync(puzzleInputPath, "utf-8").split("\n");
     - per SUBSET, Red values are always 12 or less.
     - per SUBSET, Green values are always 13 or less.
     - per SUBSET, Blue values are always 14 or less.
-    - Total cubes per SUBSET are always 39 or less (in case there's randomly an extra color in any subset?)
+    - Total cubes per SUBSET are always 39 or less (?) (in case there's randomly an extra color in any subset?)
 
     --> Consider:
     - Each GAME includes its ID in its name, like: Game 11.
@@ -18,3 +18,43 @@ const puzzleInput = fs.readFileSync(puzzleInputPath, "utf-8").split("\n");
     - SUBSETS may return all 3 colors  or less colors. (or none?). Not always every color exists within the SUBSET.
     - Final Answer will be equivalent to the SUM of the IDs of all POSSIBLE games.
 */
+
+//const filterPossibleGames
+    // First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
+
+
+    //Game 1: 4 green, 7 blue; 2 blue, 4 red; 5 blue, 2 green, 2 red; 1 green, 3 red, 9 blue; 3 green, 9 blue; 7 green, 2 blue, 2 red
+
+
+// To split and trim strings depending on a character represented by splitParam.
+const stringToArray = (string, splitParam) => {
+    return string.split(splitParam).map((item) => item.trim());
+};
+
+
+// For arrays that already have only 2 elements/items.
+const arrayToObject = (array, keyIndex, valueIndex) => {
+    const key = array[keyIndex];
+    const value = array[valueIndex];
+
+    const object = {
+        [key] : value
+    };
+
+    return object;
+}
+
+// Turn a String into an Array and then into an Object
+const stringToObject = (string) => {
+    const array = stringToArray(string, ":");
+    const object = arrayToObject(array, 0, 1);
+    return object;
+};
+
+const stringsToObjects = (strings) => {
+    return strings.map((string) => {
+        return stringToObject(string);
+    });
+}
+
+console.log(stringsToObjects(puzzleInputArray));
