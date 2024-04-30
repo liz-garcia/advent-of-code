@@ -16,7 +16,7 @@ import fs from "fs";
     - Final Answer will be equivalent to the SUM of the IDs of all POSSIBLE games.
 */
 
-const inputPath = "2023/day-2/puzzleInput.txt";
+const inputPath = "2023/day-2/input.txt";
 const games = fs.readFileSync(inputPath, "utf-8").split("\n");
 
 const gameObjects = (games) => {
