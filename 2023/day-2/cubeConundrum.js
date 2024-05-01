@@ -57,21 +57,27 @@ const processInput = (strings) => {
 
     // Turn subsetsString into an array of strings
     const subsetsString = gameSubsets;
-    const subsetsStrings = subsetsString.split(";").map((subset) => subset.trim());
+    const subsetsStrings = subsetsString
+      .split(";")
+      .map((subset) => subset.trim());
 
     //Turn subsetsArray into an array of objects
     const subsetsObjects = subsetsStrings.map((subsetString) => {
       // Each individual subset string into an array of strings, where each colorInput is a string
-      const subsetArrayOfStrings = subsetString.split(",").map((colorInput) => colorInput.trim());
+      const subsetArrayOfStrings = subsetString
+        .split(",")
+        .map((colorInput) => colorInput.trim());
 
       // Turn each subsetArrayOfStrings into an array of arrays, where each colorInputString becomes an array with the color input information.
-      const subsetArrayOfArrays = subsetArrayOfStrings.map((colorInputString) => colorInputString.split(" "));
+      const subsetArrayOfArrays = subsetArrayOfStrings.map((colorInputString) =>
+        colorInputString.split(" ")
+      );
 
       // Each individual subset array of strings into an array of objects
       const subsetObject = {
         red: undefined,
         green: undefined,
-        blue: undefined
+        blue: undefined,
       };
 
       subsetArrayOfArrays.forEach((colorInputArray) => {
@@ -89,18 +95,44 @@ const processInput = (strings) => {
         if (colorName === "blue") {
           subsetObject.blue = colorValue;
         }
-
       });
-
-      console.log(subsetObject);
 
       return subsetObject;
     });
+
+    const maxValues = subsetsObjects.reduce(
+      (max, subset) => {
+        if (
+          subset.red !== undefined &&
+          (max.red === undefined || max.red < subset.red)
+        ) {
+          max.red = subset.red;
+        }
+
+        if (
+          subset.green !== undefined &&
+          (max.green === undefined || max.green < subset.green)
+        ) {
+          max.green = subset.green;
+        }
+
+        if (
+          subset.blue !== undefined &&
+          (max.blue === undefined || max.blue < subset.blue)
+        ) {
+          max.blue = subset.blue;
+        }
+
+        return max;
+      },
+      { red: undefined, green: undefined, blue: undefined }
+    );
 
     const object = {
       id: parseInt(gameName.replace(/\D/g, "")),
       name: gameName,
       subsets: subsetsObjects,
+      maxColors: maxValues,
     };
 
     return object;
@@ -109,15 +141,9 @@ const processInput = (strings) => {
   return objects;
 };
 
-// const gameObjects = (games) => {
-//   return games.map((string) => {
-//       return string.split(splitParam).map((item) => item.trim());
-//   });
-// }
+const processedGamesInput = processInput(games);
 
 // const filterPossibleGames = (gamesArray) => {
-// First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
-//   return gamesArray;
 // }
 
 console.log(processInput(games));
