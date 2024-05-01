@@ -52,17 +52,34 @@ const processInput = (strings) => {
 
   // Turn each array into an object
   const objects = arrays.map((array) => {
-    const name = array[0];
-    const subsetsString = array[1];
+    const gameName = array[0];
+    const gameSubsets = array[1];
 
-    // Turn the full gameSubsets string into an array, where each item is a Subset object
-    const subsetsArray = subsetsString.split(";").map((item) => item.trim());
-    // const subsetsObjects;
+    // Turn subsetsString into an array of strings
+    const subsetsString = gameSubsets;
+    const subsetsStrings = subsetsString.split(";").map((subset) => subset.trim());
+
+    //Turn subsetsArray into an array of objects
+    const subsetsObjects = subsetsStrings.map((subsetString) => {
+      // Each individual subset string into an array of strings, where each colorInput is a string
+      const subsetArrayOfStrings = subsetString.split(",").map((colorInput) => colorInput.trim());
+
+      // Turn each subsetArrayOfStrings into an array of arrays, where each colorInputString becomes an array with the color input information.
+      const subsetArrayOfArrays = subsetArrayOfStrings.map((colorInputString) => colorInputString.split(" "));
+
+      console.log(subsetArrayOfArrays);
+      // Each individual subset array of strings into an array of objects
+      const subsetObject = subsetArrayOfArrays.map((colorInputArray) => {
+        
+      });
+
+      return subsetArrayOfArrays;
+    });
 
     const object = {
-      id: parseInt(name.replace(/\D/g, "")),
-      name: name,
-      subsets: subsetsArray,
+      id: parseInt(gameName.replace(/\D/g, "")),
+      name: gameName,
+      subsets: subsetsObjects,
     };
 
     return object;
