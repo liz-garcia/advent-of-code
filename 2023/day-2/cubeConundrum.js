@@ -8,6 +8,29 @@ import fs from "fs";
     - per SUBSET, Blue values are always 14 or less.
     - Total cubes per SUBSET are always 39 or less (?) (in case there's randomly an extra color in any subset?)
 
+    --> Each GAME input looks like this:
+    Game 1: 4 green, 7 blue; 2 blue, 4 red;
+            5 blue, 2 green, 2 red;
+            1 green, 3 red, 9 blue;
+            3 green, 9 blue;
+            7 green, 2 blue, 2 red
+
+    --> Process each GAME input into an object:
+    {
+      id: number,
+      name: string,
+      subsets: [
+        {
+          red: 
+          green:
+          blue:
+        }, (...)
+      ]
+      topRed: number,
+      topGreen: number,
+      topBlue: number,
+    }
+
     --> Consider:
     - Each GAME includes its ID in its name, like: Game 11.
     - SUBSETS are 1 or more per GAME.
@@ -19,16 +42,15 @@ import fs from "fs";
 const inputPath = "2023/day-2/input.txt";
 const games = fs.readFileSync(inputPath, "utf-8").split("\n");
 
-const gameObjects = (games) => {
-  return games.map((string) => {
-      return string.split(splitParam).map((item) => item.trim());
-  });
-}
+// const gameObjects = (games) => {
+//   return games.map((string) => {
+//       return string.split(splitParam).map((item) => item.trim());
+//   });
+// }
 
-const filterPossibleGames = (gamesArray) => {
-  // First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
-  return gamesArray;
-
-}
+// const filterPossibleGames = (gamesArray) => {
+//   // First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
+//   return gamesArray;
+// }
 
 console.log(filterPossibleGames(games));
