@@ -42,6 +42,30 @@ import fs from "fs";
 const inputPath = "2023/day-2/input.txt";
 const games = fs.readFileSync(inputPath, "utf-8").split("\n");
 
+// TODO: Turn each GAMEinput into an Object. Identify biggest RED, BLUE and GREEN input numbers.
+const processInput = (strings) => {
+  // Turn each string item into an array
+  const arrays = strings.map((string) => {
+    return string.split(":").map((item) => item.trim());
+  });
+
+  // Turn each array into an object
+  const objects = arrays.map((array) => {
+    const gameName = array[0];
+    const gameSubsets = array[1];
+
+    const object = {
+      id: parseInt(gameName.replace(/\D/g, "")),
+      name: gameName,
+      subsets: gameSubsets,
+    };
+
+    return object;
+  });
+
+  return objects;
+};
+
 // const gameObjects = (games) => {
 //   return games.map((string) => {
 //       return string.split(splitParam).map((item) => item.trim());
@@ -49,8 +73,8 @@ const games = fs.readFileSync(inputPath, "utf-8").split("\n");
 // }
 
 // const filterPossibleGames = (gamesArray) => {
-//   // First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
+// First: turn each GAME String into an Object with key-value pairs for 'id' and 'subsets'; 'subsets' property should be an array from the string of comma-separated values.
 //   return gamesArray;
 // }
 
-console.log(filterPossibleGames(games));
+console.log(processInput(games));
