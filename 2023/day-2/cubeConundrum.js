@@ -67,13 +67,34 @@ const processInput = (strings) => {
       // Turn each subsetArrayOfStrings into an array of arrays, where each colorInputString becomes an array with the color input information.
       const subsetArrayOfArrays = subsetArrayOfStrings.map((colorInputString) => colorInputString.split(" "));
 
-      console.log(subsetArrayOfArrays);
       // Each individual subset array of strings into an array of objects
-      const subsetObject = subsetArrayOfArrays.map((colorInputArray) => {
-        
+      const subsetObject = {
+        red: undefined,
+        green: undefined,
+        blue: undefined
+      };
+
+      subsetArrayOfArrays.forEach((colorInputArray) => {
+        const colorName = colorInputArray[1];
+        const colorValue = parseInt(colorInputArray[0]);
+
+        if (colorName === "red") {
+          subsetObject.red = colorValue;
+        }
+
+        if (colorName === "green") {
+          subsetObject.green = colorValue;
+        }
+
+        if (colorName === "blue") {
+          subsetObject.blue = colorValue;
+        }
+
       });
 
-      return subsetArrayOfArrays;
+      console.log(subsetObject);
+
+      return subsetObject;
     });
 
     const object = {
