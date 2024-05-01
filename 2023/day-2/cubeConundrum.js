@@ -42,7 +42,8 @@ import fs from "fs";
 const inputPath = "2023/day-2/input.txt";
 const games = fs.readFileSync(inputPath, "utf-8").split("\n");
 
-// TODO: Turn each GAMEinput into an Object. Identify biggest RED, BLUE and GREEN input numbers.
+// TODO: Turn each GAMEinput into an Object.
+// Identify biggest RED, BLUE and GREEN input numbers.
 const processInput = (strings) => {
   // Turn each string item into an array
   const arrays = strings.map((string) => {
@@ -51,13 +52,17 @@ const processInput = (strings) => {
 
   // Turn each array into an object
   const objects = arrays.map((array) => {
-    const gameName = array[0];
-    const gameSubsets = array[1];
+    const name = array[0];
+    const subsetsString = array[1];
+
+    // Turn the full gameSubsets string into an array, where each item is a Subset object
+    const subsetsArray = subsetsString.split(";").map((item) => item.trim());
+    // const subsetsObjects;
 
     const object = {
-      id: parseInt(gameName.replace(/\D/g, "")),
-      name: gameName,
-      subsets: gameSubsets,
+      id: parseInt(name.replace(/\D/g, "")),
+      name: name,
+      subsets: subsetsArray,
     };
 
     return object;
