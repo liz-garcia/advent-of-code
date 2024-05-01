@@ -25,10 +25,12 @@ import fs from "fs";
           green:
           blue:
         }, (...)
-      ]
-      topRed: number,
-      topGreen: number,
-      topBlue: number,
+      ],
+      maxColors: {
+        red: number,
+        green: number,
+        blue: number
+      }
     }
 
     --> Consider:
@@ -141,9 +143,64 @@ const processInput = (strings) => {
   return objects;
 };
 
-const processedGamesInput = processInput(games);
+const filterPossibleGames = (
+  gamesData,
+  possibleRedCubes,
+  possibleGreenCubes,
+  possibleBlueCubes
+) => {
 
-// const filterPossibleGames = (gamesArray) => {
-// }
+  return gamesData.filter((game) => {
+    const red = game.maxColors.red;
+    const green = game.maxColors.green;
+    const blue = game.maxColors.blue;
 
-console.log(processInput(games));
+    let redIsPossible;
+    let greenIsPossible;
+    let blueIsPossible;
+    
+    if (
+      red !== undefined &&
+      (red === possibleRedCubes || red < possibleRedCubes)
+    ) {
+      redIsPossible = true;
+    } else { redIsPossible = false; }
+
+    if (
+      green !== undefined &&
+      (green === possibleGreenCubes || green < possibleGreenCubes)
+    ) {
+      greenIsPossible = true;
+    } else { greenIsPossible = false; }
+
+    if (
+      blue !== undefined &&
+      (blue === possibleBlueCubes || blue < possibleBlueCubes)
+    ) {
+      blueIsPossible = true;
+    } else { blueIsPossible = false; }
+
+    return redIsPossible && greenIsPossible && blueIsPossible;
+  });
+};
+
+const sumPossibleGamesIds = (gamesInput, possibleRedCubes,
+  possibleGreenCubes,
+  possibleBlueCubes) => {
+
+    // Process games data
+    const gamesData = processInput(gamesInput);
+
+    // Filter possible games
+    const possibleGames = filterPossibleGames(gamesData, possibleRedCubes, possibleGreenCubes, possibleBlueCubes);
+
+    // Sum all possible games Ids
+    const sumOfIds = possibleGames.reduce((accumulator, game) => {
+      return game.id + accumulator;
+    }, 0)
+
+    return sumOfIds;
+  };
+
+console.log(sumPossibleGamesIds(games, 12, 13, 14));
+// Output: 2285;
