@@ -44,7 +44,8 @@ import fs from "fs";
 const inputPath = "2023/day-2/input.txt";
 const games = fs.readFileSync(inputPath, "utf-8").split("\n");
 
-// TODO: Turn each GAMEinput into an Object.
+/* -------------------- Part 1 -------------------- */
+
 // Identify biggest RED, BLUE and GREEN input numbers.
 const processInput = (strings) => {
   // Turn each string item into an array
@@ -135,6 +136,7 @@ const processInput = (strings) => {
       name: gameName,
       subsets: subsetsObjects,
       maxColors: maxValues,
+      power: maxValues.red * maxValues.green * maxValues.blue,
     };
 
     return object;
@@ -204,3 +206,17 @@ const sumPossibleGamesIds = (gamesInput, possibleRedCubes,
 
 console.log(sumPossibleGamesIds(games, 12, 13, 14));
 // Output: 2285;
+
+/* -------------------- Part 2 -------------------- */
+
+const sumGamesPower = (gamesInput) => {
+  // Process games data
+  const allGamesData = processInput(gamesInput);
+
+  const totalGamesPower = allGamesData.reduce((totalPower, game) => totalPower + game.power, 0);
+
+  return totalGamesPower;
+};
+
+console.log(sumGamesPower(games));
+// Output: 77021
