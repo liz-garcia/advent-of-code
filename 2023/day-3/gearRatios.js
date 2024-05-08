@@ -39,39 +39,12 @@ rows.forEach((line) => {
   }
 });
 
-// const numbers = Array.from(numbersSet);
+const numbers = Array.from(numbersSet);
 
-// Identify partNumbers
-// const isNumber = (character) => {
-//   return !isNaN(character) && character !== ".";
-// };
-
-// const isPartNumber = (symbols, rows, rowIndex, columnIndex) => {
-//   const positions = [
-//     [rowIndex - 1, columnIndex], // Up
-//     [rowIndex + 1, columnIndex],  // Down
-//     [rowIndex, columnIndex - 1], // Left
-//     [rowIndex, columnIndex + 1],  // Right
-//     [rowIndex - 1, columnIndex - 1], // Top-Left
-//     [rowIndex - 1, columnIndex + 1],  // Top-Right
-//     [rowIndex + 1, columnIndex - 1], // Bottom-Left
-//     [rowIndex + 1, columnIndex + 1],  // Bottom-Right
-//   ];
-
-//   for (const position of positions) {
-//     const [row, column] = position;
-//     if (row >= 0 && row < rows.length && column >= 0 && column < rows[row].length) {
-//       if (symbols.includes(rows[row][column])) {
-//         return true;
-//       }
-//     }
-//   }
-
-//   return false;
-// };
-
-const isPartNumber = (input, rowIndex, columnIndex) => {
+// Identify partNumber: Find if a character position is surrounded by a symbol
+const isPartNumber = (symbolsList, input, rowIndex, columnIndex) => {
   let surroundingValues = [];
+  // console.log(input[rowIndex][columnIndex]);
 
   const positions = [
     [rowIndex - 1, columnIndex - 1], // Top-Left
@@ -96,29 +69,33 @@ const isPartNumber = (input, rowIndex, columnIndex) => {
     }
   }
 
-  console.log(surroundingValues);
+  // console.log(surroundingValues);
+
+  return surroundingValues.some(value => symbolsList.includes(value));
 };
 
 // Sum all fullPartNumbers
 let sum = 0;
+const partNumbers = [];
 
-// numbers.forEach((number) => {
-//   rows.forEach((row, rowIndex) => {
-//     if (row.includes(number)) {
-//       number.split("").forEach((character, columnIndex) => {
-//         if (
-//           isNumber(character) &&
-//           isPartNumber(symbols, rows, rowIndex, columnIndex)
-//         ) {
-//           console.log(number);
-//           sum += parseInt(number, 10);
-//         }
-//       });
-//     }
-//   });
-// });
+numbers.forEach((number) => {
+  rows.forEach((row, rowIndex) => {
+    if (row.includes(number)) {
+      number.split("").forEach((character, columnIndex) => {
+        if (
+          isPartNumber(symbols, rows, rowIndex, columnIndex)
+        ) {
+          partNumbers.push(number);
+          sum += parseInt(number, 10);
+        }
+      });
+    }
+  });
+});
 
-// console.log(symbols, numbers);
-// console.log(sum);
+console.log(symbols, numbers);
+console.log(partNumbers);
+console.log(sum);
 
-isPartNumber(rows, 0, 0);
+// console.log(isPartNumber(symbols, rows, 0, 8));
+// Something might be happening with columnIndex. I should inspect it.
