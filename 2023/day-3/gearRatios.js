@@ -63,13 +63,14 @@ const isPartNumber = (symbolsList, input, rowIndex, columnIndex) => {
       row >= 0 &&
       row < input.length &&
       column >= 0 &&
-      column < input[0].length
+      column < input[0].length &&
+      input[row][column] !== " "
     ) {
       surroundingValues.push(input[row][column]);
+    } else {
+      surroundingValues.push(null); // Push null for out-of-bounds positions
     }
   }
-
-  // console.log(surroundingValues);
 
   return surroundingValues.some(value => symbolsList.includes(value));
 };
