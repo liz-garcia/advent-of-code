@@ -1,22 +1,48 @@
-/* Context:
-    - We are given a string representing the engine schematic.
-    - Any number adjacent (even diagonally) to a symbol (except ".") is a PART NUMBER.
-    - We need to find the SUM of all the PART NUMBERS.
-
-    Process:
-    - Iterate through the engine schematic. Go through each character in the string representing the schematic.
-    - Identify PART NUMBERS. For each character, check if it's a number, and if it's adjacent (up, down, left, right, or diagonally) to a symbol (except ".").
-    - Extract and ADD Numbers: If it is a PART NUMBER, convert it to a number and add it to a running total.
-*/
-
 import fs from "fs";
 
-// Read schematic input and turn it into an array of rows.
-const inputPath = "2023/day-3/input.txt";
-const schematic = fs.readFileSync(inputPath, "utf-8").split("\n");
+const path = "2023/day-3/input.txt";
+const schematic = fs.readFileSync(path, "utf-8");
+const rows = schematic.split("\n");
 
-const findPartNumbers = (input) => {
-    input.forEach((row) => {
-        //
-    });
+let sum = 0;
+
+const isNumber = (character) => {
+  return !isNaN(character) && character !== ".";
 };
+
+const isPartNumber = (rows, rowIndex, columnIndex) => {
+  const symbols = ["*", "+", "-", "/", "=", "&", "%", "@", "$"];
+
+  const directions = [
+    [-1, 0], // Up
+    [1, 0],  // Down
+    [0, -1], // Left
+    [0, 1],  // Right
+    [-1, -1], // Top-Left diagonal
+    [-1, 1],  // Top-Right diagonal
+    [1, -1], // Bottom-Left diagonal
+    [1, 1],  // Bottom-Right diagonal
+  ];
+
+  return symbols.some((symbol) => {
+    return directions.some(([rowOffset, colOffset]) => {
+      const row = rowIndex + rowOffset;
+      const column = columnIndex + colOffset;
+      return (
+        row >= 0 && row < rows.length &&
+        column >= 0 && column < rows[row].length &&
+        rows[row][column] === symbol
+      );
+    });
+  });
+};
+
+rows.forEach((row, rowIndex) => {
+  row.split("").forEach((char, columnIndex) => {
+    if (isNumber(char) && isPartNumber(rows, rowIndex, columnIndex)) {
+      sum += parseInt(char, 10);
+    }
+  });
+});
+
+console.log(sum);
