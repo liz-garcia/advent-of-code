@@ -1,4 +1,6 @@
 function isPartNumber(rows, number) {
+    const symbols = ["*", "#", "+", "-", "/", "=", "&", "%", "@", "$"];
+
     // Find the row and column of the number
     let row = -1;
     let column = -1;
@@ -13,7 +15,7 @@ function isPartNumber(rows, number) {
     
     if (row === -1 || column === -1) {
         console.log("Number not found in the rows.");
-        return;
+        return false;
     }
     
     // Get surrounding values
@@ -30,7 +32,14 @@ function isPartNumber(rows, number) {
         }
     }
     
-    return surroundingValues;
+    // Check if any symbol is present in surroundingValues
+    for (let symbol of symbols) {
+        if (surroundingValues.includes(symbol)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 // Example usage
@@ -41,11 +50,5 @@ let rows = [
     "...........558.577..........486...186*925.....*....483.883.1....286...................................625..................#474.....491.....",
     "..............*.........243.................287................*............$....245............830.........793......#..........306..*......"
 ];
-let number = "793";
+let number = "577";
 console.log(isPartNumber(rows, number));
-
-// To really know if it's a partNumber we need to evaluate if the resulting surroundingValues array contains any of these symbols:
-
-//   const symbols = ["*", "#", "+", "-", "/", "=", "&", "%", "@", "$"];
-
-// so the function isPartNumber would return
