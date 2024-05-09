@@ -1,4 +1,4 @@
-function isPartNumber(rows, number) {
+function isPartNumber(rows, number, partNumbers) {
     const symbols = ["*", "#", "+", "-", "/", "=", "&", "%", "@", "$"];
 
     // Find the row and column of the number
@@ -35,6 +35,7 @@ function isPartNumber(rows, number) {
     // Check if any symbol is present in surroundingValues
     for (let symbol of symbols) {
         if (surroundingValues.includes(symbol)) {
+            partNumbers.push(number);
             return true;
         }
     }
@@ -50,5 +51,12 @@ let rows = [
     "...........558.577..........486...186*925.....*....483.883.1....286...................................625..................#474.....491.....",
     "..............*.........243.................287................*............$....245............830.........793......#..........306..*......"
 ];
-let number = "577";
-console.log(isPartNumber(rows, number));
+let partNumbers = [];
+
+rows.forEach((row) => {
+    for (let number of row.match(/\d+/g)) {
+        isPartNumber(rows, number, partNumbers);
+    }
+});
+
+console.log(partNumbers);
