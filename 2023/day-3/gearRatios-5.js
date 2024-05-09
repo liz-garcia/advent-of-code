@@ -54,8 +54,11 @@ let rows = [
 let partNumbers = [];
 
 rows.forEach((row) => {
-    for (let number of row.match(/\d+/g)) {
-        isPartNumber(rows, number, partNumbers);
+    let numbers = row.match(/\d+/g);
+    if (numbers) {
+        numbers.forEach((number) => {
+            isPartNumber(rows, number, partNumbers);
+        });
     }
 });
 
