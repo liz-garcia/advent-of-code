@@ -18,8 +18,7 @@ schematic.forEach((row) => {
 const symbols = Array.from(symbolsSet);
 console.log(symbols);
 
-// * Numbers per Row
-
+// * Numbers and surrounding Characters, per Row
 function processNumbersInString(rows, row, rowIndex) {
   // Regular expression to match all numbers in the string
   const regex = /\d+/g;
@@ -31,7 +30,7 @@ function processNumbersInString(rows, row, rowIndex) {
     const startIndex = match.index;
     const endIndex = regex.lastIndex - 1;
 
-    // Identify rows on top and bottom
+    // Identify rows on top and below current `row`
     const topRow = rowIndex > 0 ? rows[rowIndex - 1] : null;
     const bottomRow = rowIndex < rows.length - 1 ? rows[rowIndex + 1] : null;
 
@@ -52,11 +51,18 @@ function processNumbersInString(rows, row, rowIndex) {
     if (topRow) {
       topLeftChar = leftChar ? topRow[startIndex - 1] : null;
       topRightChar = rightChar ? topRow[endIndex + 1] : null;
+      // TODO Identify topChars
+      // Get the matched number and its position
+        const number = match[0];
+        const startIndex = match.index;
+        const endIndex = regex.lastIndex - 1;
+      topChars = []
     }
 
     if (bottomRow) {
       bottomLeftChar = leftChar ? bottomRow[startIndex - 1] : null;
       bottomRightChar = rightChar ? bottomRow[endIndex + 1] : null;
+      // TODO Identify bottomChars
     }
 
     // Perform actions on the number
