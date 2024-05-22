@@ -45,24 +45,27 @@ function processNumbersInString(rows, row, rowIndex) {
     let bottomRightChar;
 
     // Determine characters directly on top and directly below the number
-    let topChars;
-    let bottomChars;
+    let topChars = [];
+    let bottomChars = [];
 
     if (topRow) {
       topLeftChar = leftChar ? topRow[startIndex - 1] : null;
       topRightChar = rightChar ? topRow[endIndex + 1] : null;
-      // TODO Identify topChars
-      // Get the matched number and its position
-        const number = match[0];
-        const startIndex = match.index;
-        const endIndex = regex.lastIndex - 1;
-      topChars = []
+      for (let i = startIndex; i <= endIndex; i++) {
+        topChars.push(topRow[i]);
+      }
+    } else {
+        topLeftChar = topRightChar = null;
     }
 
     if (bottomRow) {
       bottomLeftChar = leftChar ? bottomRow[startIndex - 1] : null;
       bottomRightChar = rightChar ? bottomRow[endIndex + 1] : null;
-      // TODO Identify bottomChars
+      for (let i = startIndex; i <= endIndex; i++) {
+        bottomChars.push(bottomRow[i]);
+      }
+    } else {
+        bottomLeftChar = bottomRightChar = null;
     }
 
     // Perform actions on the number
@@ -71,13 +74,25 @@ function processNumbersInString(rows, row, rowIndex) {
     console.log(`Right character: ${rightChar === null ? "None" : rightChar}`);
     console.log(`Top-Left character: ${topLeftChar === null ? "None" : topLeftChar}`);
     console.log(`Top-Right character: ${topRightChar === null ? "None" : topRightChar}`);
+    console.log(`Top characters: ${!topChars.length ? "None" : topChars}`);
     console.log(`Bottom-Left character: ${bottomLeftChar === null ? "None" : bottomLeftChar}`);
     console.log(`Bottom-Right character: ${bottomRightChar === null ? "None" : bottomRightChar}`);
+    console.log(`Bottom characters: ${!bottomChars.length ? "None" : bottomChars}`);
+
+    // Construct surroundingChars excluding null values
+    const surroundingChars = [
+        topLeftChar, 
+        ...topChars, 
+        topRightChar, 
+        bottomLeftChar, 
+        ...bottomChars, 
+        bottomRightChar, 
+        leftChar, 
+        rightChar
+      ].filter(char => char !== null);
+
+    console.log(surroundingChars);
   }
 }
 
-const test = processNumbersInString(schematic, schematic[1], 1);
-// schematic.forEach((row) => {
-// });
-
-console.log(test);
+processNumbersInString(schematic, schematic[schematic.length -1], schematic.length -1);
