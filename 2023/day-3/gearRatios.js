@@ -20,6 +20,8 @@ console.log(symbols);
 
 // * Numbers and surrounding Characters, per Row
 function processNumbersInString(rows, row, rowIndex) {
+    const partNumbers = [];
+
   // Regular expression to match all numbers in the string
   const regex = /\d+/g;
   let match;
@@ -92,7 +94,15 @@ function processNumbersInString(rows, row, rowIndex) {
       ].filter(char => char !== null);
 
     console.log(surroundingChars);
+
+    for (let symbol of symbols) {
+        if (surroundingChars.includes(symbol)) {
+          partNumbers.push(number);
+        }
+      }
   }
+
+  return !partNumbers ? "No partNumbers found." : partNumbers;
 }
 
-processNumbersInString(schematic, schematic[schematic.length -1], schematic.length -1);
+processNumbersInString(schematic, schematic[0], 0);
