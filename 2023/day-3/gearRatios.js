@@ -71,17 +71,6 @@ function getPartNumbers(rows, row, rowIndex) {
       bottomLeftChar = bottomRightChar = null;
     }
 
-    // Perform actions on the number
-    // console.log(`\n Processing number ${number} at index ${startIndex}`);
-    // console.log(`Left character: ${leftChar === null ? "None" : leftChar}`);
-    // console.log(`Right character: ${rightChar === null ? "None" : rightChar}`);
-    // console.log(`Top-Left character: ${topLeftChar === null ? "None" : topLeftChar}`);
-    // console.log(`Top-Right character: ${topRightChar === null ? "None" : topRightChar}`);
-    // console.log(`Top characters: ${!topChars.length ? "None" : topChars}`);
-    // console.log(`Bottom-Left character: ${bottomLeftChar === null ? "None" : bottomLeftChar}`);
-    // console.log(`Bottom-Right character: ${bottomRightChar === null ? "None" : bottomRightChar}`);
-    // console.log(`Bottom characters: ${!bottomChars.length ? "None" : bottomChars}`);
-
     // Construct surroundingChars excluding null values
     const surroundingChars = [
       topLeftChar,
@@ -93,8 +82,6 @@ function getPartNumbers(rows, row, rowIndex) {
       leftChar,
       rightChar,
     ].filter((char) => char !== null); // Remove any null values
-
-    // console.log(surroundingChars);
 
     for (let symbol of symbols) {
       if (surroundingChars.includes(symbol)) {
@@ -144,31 +131,63 @@ function getGearRatios(rows, row, rowIndex) {
   const regex = /\*/g;
   let match;
 
-  while ((match = regex.exec(row)) !== null) {
-    const character = match[0];
-    const surroundingChars = [];
+  const matrixes = [];
 
-    // Determine characters surrounding the '*'
-    // let topLeftChar;
-    // let topChar;
-    // let topRightChar;
-    // let bottomLeftChar;
-    // let bottomChar;
-    // let bottomRightChar;
+  while ((match = regex.exec(row)) !== null) {
+    // Get the current character and its position
+    const currentChar = match[0];
+    const index = match.index;
+
+    // Identify rows on top and below current `row`
+    const topRow = rowIndex > 0 ? rows[rowIndex - 1] : null;
+    const bottomRow = rowIndex < rows.length - 1 ? rows[rowIndex + 1] : null;
+
+
+    // Determine characters to the left and right
+    const leftChar = index > 0 ? row[index - 1] : null;
+    const rightChar = index < row.length - 1 ? row[index + 1] : null;
+
+    // Determine top, bottom and diagonal characters
+    let topLeftChar;
+    let topChar;
+    let topRightChar;
+    let bottomLeftChar;
+    let bottomChar;
+    let bottomRightChar;
+
+    if (topRow) {
+      topChar = topRow[index];
+      topLeftChar = leftChar ? topRow[index - 1] : null;
+      topRightChar = rightChar ? topRow[index + 1] : null;
+    } else {
+      topChar = topLeftChar = topRightChar = null;
+    }
+
+    if (bottomRow) {
+      bottomChar = bottomRow[index];
+      bottomLeftChar = leftChar ? bottomRow[index - 1] : null;
+      bottomRightChar = rightChar ? bottomRow[index + 1] : null;
+    } else {
+      bottomChar = bottomLeftChar = bottomRightChar = null;
+    }
+
+    // Construct surroundingChars excluding null values
+    const currentMatrix = [
+      topLeftChar,
+      topChar,
+      topRightChar,
+      leftChar,
+      currentChar,
+      rightChar,
+      bottomLeftChar,
+      bottomChar,
+      bottomRightChar,
+    ].filter((char) => char !== null); // Remove any null values
+
+    matrixes.push(currentMatrix);
   }
 
-  // const isNumber = (character) => {
-  //   return !isNaN(character) && character !== ".";
-  // };
-
-  // const regex = /\d+/g;
-  // let match;
-
-  // while ((match = regex.exec(row)) !== null) {}
-
-  // Identify rows on top and below current `row`
-  // const topRow = rowIndex > 0 ? rows[rowIndex - 1] : null;
-  // const bottomRow = rowIndex < rows.length - 1 ? rows[rowIndex + 1] : null;
+  console.log(matrixes);
 
   return gearRatios;
 }
