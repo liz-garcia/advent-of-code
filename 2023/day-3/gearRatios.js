@@ -18,7 +18,6 @@ schematic.forEach((row) => {
 });
 
 const symbols = Array.from(symbolsSet);
-// console.log(symbols);
 
 // * PartNumbers per Row
 function getPartNumbers(rows, row, rowIndex) {
@@ -140,4 +139,38 @@ console.log(sumTotalPartNumbers(schematic));
 // ^ Part Two
 
 // * Get GearRatios, per Row
-function getGearRatios() {}
+function getGearRatios(rows, row, rowIndex) {
+  const gearRatios = [];
+  const regex = /\*/g;
+  let match;
+
+  while ((match = regex.exec(row)) !== null) {
+    const character = match[0];
+    const surroundingChars = [];
+
+    // Determine characters surrounding the '*'
+    // let topLeftChar;
+    // let topChar;
+    // let topRightChar;
+    // let bottomLeftChar;
+    // let bottomChar;
+    // let bottomRightChar;
+  }
+
+  // const isNumber = (character) => {
+  //   return !isNaN(character) && character !== ".";
+  // };
+
+  // const regex = /\d+/g;
+  // let match;
+
+  // while ((match = regex.exec(row)) !== null) {}
+
+  // Identify rows on top and below current `row`
+  // const topRow = rowIndex > 0 ? rows[rowIndex - 1] : null;
+  // const bottomRow = rowIndex < rows.length - 1 ? rows[rowIndex + 1] : null;
+
+  return gearRatios;
+}
+
+console.log(getGearRatios(schematic, schematic[1], 1));
