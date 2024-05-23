@@ -16,10 +16,10 @@ schematic.forEach((row) => {
 });
 
 const symbols = Array.from(symbolsSet);
-console.log(symbols);
+// console.log(symbols);
 
 // * Numbers and surrounding Characters, per Row
-function processNumbersInString(rows, row, rowIndex) {
+function getPartNumbers(rows, row, rowIndex) {
     const partNumbers = [];
 
   // Regular expression to match all numbers in the string
@@ -71,15 +71,15 @@ function processNumbersInString(rows, row, rowIndex) {
     }
 
     // Perform actions on the number
-    console.log(`\n Processing number ${number} at index ${startIndex}`);
-    console.log(`Left character: ${leftChar === null ? "None" : leftChar}`);
-    console.log(`Right character: ${rightChar === null ? "None" : rightChar}`);
-    console.log(`Top-Left character: ${topLeftChar === null ? "None" : topLeftChar}`);
-    console.log(`Top-Right character: ${topRightChar === null ? "None" : topRightChar}`);
-    console.log(`Top characters: ${!topChars.length ? "None" : topChars}`);
-    console.log(`Bottom-Left character: ${bottomLeftChar === null ? "None" : bottomLeftChar}`);
-    console.log(`Bottom-Right character: ${bottomRightChar === null ? "None" : bottomRightChar}`);
-    console.log(`Bottom characters: ${!bottomChars.length ? "None" : bottomChars}`);
+    // console.log(`\n Processing number ${number} at index ${startIndex}`);
+    // console.log(`Left character: ${leftChar === null ? "None" : leftChar}`);
+    // console.log(`Right character: ${rightChar === null ? "None" : rightChar}`);
+    // console.log(`Top-Left character: ${topLeftChar === null ? "None" : topLeftChar}`);
+    // console.log(`Top-Right character: ${topRightChar === null ? "None" : topRightChar}`);
+    // console.log(`Top characters: ${!topChars.length ? "None" : topChars}`);
+    // console.log(`Bottom-Left character: ${bottomLeftChar === null ? "None" : bottomLeftChar}`);
+    // console.log(`Bottom-Right character: ${bottomRightChar === null ? "None" : bottomRightChar}`);
+    // console.log(`Bottom characters: ${!bottomChars.length ? "None" : bottomChars}`);
 
     // Construct surroundingChars excluding null values
     const surroundingChars = [
@@ -91,9 +91,9 @@ function processNumbersInString(rows, row, rowIndex) {
         bottomRightChar, 
         leftChar, 
         rightChar
-      ].filter(char => char !== null);
+      ].filter(char => char !== null); // Remove any null values
 
-    console.log(surroundingChars);
+    // console.log(surroundingChars);
 
     for (let symbol of symbols) {
         if (surroundingChars.includes(symbol)) {
@@ -102,7 +102,24 @@ function processNumbersInString(rows, row, rowIndex) {
       }
   }
 
-  return !partNumbers ? "No partNumbers found." : partNumbers;
+  return partNumbers;
 }
 
-processNumbersInString(schematic, schematic[0], 0);
+function processPartNumbers(rows) {
+  const allPartNumbers = [];
+
+  rows.forEach((row, rowIndex) => {
+    const rowPartNumbers = getPartNumbers(schematic, row, rowIndex);
+
+    if (rowPartNumbers.length > 0) {
+      allPartNumbers.push(...rowPartNumbers);
+    }
+  });
+
+  return allPartNumbers;
+};
+
+// console.log(processPartNumbers(schematic));
+
+
+// processNumbersInRow(schematic, schematic[0], 0);
