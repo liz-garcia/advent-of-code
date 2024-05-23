@@ -22,7 +22,7 @@ const symbols = Array.from(symbolsSet);
 
 // * PartNumbers per Row
 function getPartNumbers(rows, row, rowIndex) {
-    const partNumbers = [];
+  const partNumbers = [];
 
   // Regular expression to match all numbers in the string
   const regex = /\d+/g;
@@ -59,7 +59,7 @@ function getPartNumbers(rows, row, rowIndex) {
         topChars.push(topRow[i]);
       }
     } else {
-        topLeftChar = topRightChar = null;
+      topLeftChar = topRightChar = null;
     }
 
     if (bottomRow) {
@@ -69,7 +69,7 @@ function getPartNumbers(rows, row, rowIndex) {
         bottomChars.push(bottomRow[i]);
       }
     } else {
-        bottomLeftChar = bottomRightChar = null;
+      bottomLeftChar = bottomRightChar = null;
     }
 
     // Perform actions on the number
@@ -85,23 +85,23 @@ function getPartNumbers(rows, row, rowIndex) {
 
     // Construct surroundingChars excluding null values
     const surroundingChars = [
-        topLeftChar, 
-        ...topChars, 
-        topRightChar, 
-        bottomLeftChar, 
-        ...bottomChars, 
-        bottomRightChar, 
-        leftChar, 
-        rightChar
-      ].filter(char => char !== null); // Remove any null values
+      topLeftChar,
+      ...topChars,
+      topRightChar,
+      bottomLeftChar,
+      ...bottomChars,
+      bottomRightChar,
+      leftChar,
+      rightChar,
+    ].filter((char) => char !== null); // Remove any null values
 
     // console.log(surroundingChars);
 
     for (let symbol of symbols) {
-        if (surroundingChars.includes(symbol)) {
-          partNumbers.push(number);
-        }
+      if (surroundingChars.includes(symbol)) {
+        partNumbers.push(number);
       }
+    }
   }
 
   return partNumbers;
@@ -120,7 +120,7 @@ function getAllPartNumbers(rows) {
   });
 
   return allPartNumbers;
-};
+}
 
 // * Sum All PartNumbers
 function sumTotalPartNumbers(rows) {
@@ -138,3 +138,6 @@ console.log(sumTotalPartNumbers(schematic));
 // Output: 546312
 
 // ^ Part Two
+
+// * Get GearRatios, per Row
+function getGearRatios() {}
