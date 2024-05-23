@@ -4,6 +4,8 @@ const path = "2023/day-3/input.txt";
 const input = fs.readFileSync(path, "utf-8"); // Read file
 const schematic = input.split("\n"); // Input array
 
+// ^ Part One
+
 // * Symbols Set
 const symbolsSet = new Set(); // Use Set to store -unique- values of any type, in this case: an array of strings, where each string is a symbol.
 
@@ -18,7 +20,7 @@ schematic.forEach((row) => {
 const symbols = Array.from(symbolsSet);
 // console.log(symbols);
 
-// * Numbers and surrounding Characters, per Row
+// * PartNumbers per Row
 function getPartNumbers(rows, row, rowIndex) {
     const partNumbers = [];
 
@@ -105,6 +107,7 @@ function getPartNumbers(rows, row, rowIndex) {
   return partNumbers;
 }
 
+// * Get All PartNumbers
 function getAllPartNumbers(rows) {
   const allPartNumbers = [];
 
@@ -119,6 +122,7 @@ function getAllPartNumbers(rows) {
   return allPartNumbers;
 };
 
+// * Sum All PartNumbers
 function sumTotalPartNumbers(rows) {
   const totalPartNumbers = getAllPartNumbers(rows);
   let sum = 0;
@@ -132,3 +136,5 @@ function sumTotalPartNumbers(rows) {
 
 console.log(sumTotalPartNumbers(schematic));
 // Output: 546312
+
+// ^ Part Two
