@@ -105,7 +105,7 @@ function getPartNumbers(rows, row, rowIndex) {
   return partNumbers;
 }
 
-function processPartNumbers(rows) {
+function getAllPartNumbers(rows) {
   const allPartNumbers = [];
 
   rows.forEach((row, rowIndex) => {
@@ -119,7 +119,16 @@ function processPartNumbers(rows) {
   return allPartNumbers;
 };
 
-// console.log(processPartNumbers(schematic));
+function sumTotalPartNumbers(rows) {
+  const totalPartNumbers = getAllPartNumbers(rows);
+  let sum = 0;
 
+  for (let partNumber of totalPartNumbers) {
+    sum += parseInt(partNumber, 10);
+  }
 
-// processNumbersInRow(schematic, schematic[0], 0);
+  return sum;
+}
+
+console.log(sumTotalPartNumbers(schematic));
+// Output: 546312
