@@ -127,6 +127,16 @@ console.log(sumTotalPartNumbers(schematic));
 
 // * Get GearRatios, per Row
 function getGearRatios(rows, row, rowIndex) {
+  const otherSymbols = symbols.filter((char) => char !== "*");
+
+  const isGearRatio = (character) => {
+    return !isNaN(character) && character !== otherSymbols;
+  };
+
+  const getFullNumber = (numberChar) => {
+    // TODO Evaluate whether the numberChar has numbers to the left or right of it, to get the actual Full number.
+  };
+
   const gearRatios = [];
   const regex = /\*/g;
   let match;
